@@ -22,12 +22,13 @@ ui.gameIntro()
 
 solution = dictionary.randomWord() # Generate a random word
  
-# print("Solution is ",solution,"\n")# Debug Line
+print("Solution is ",solution,"\n")# Debug Line
 attempts = 6 # Number of attempts allowed
 attemptList = [] # Records number of user's tried words
 
 while True: # Runs the loop until number of attempts run out, or the user wins.
     if ui.checkWin(attempts):
+        ui.printStats(attempts)
         break
     flag = 0 # Tracks number of letters rightly guessed in the correct position on each attempt to check if user has one
     result = ["","","","",""] # Assigns "+","-" or "^" depending on correct and incorrect letters and positions
@@ -61,6 +62,9 @@ while True: # Runs the loop until number of attempts run out, or the user wins.
     ui.printRound(userInput,result) # Show result of current input
 
     if ui.checkWin(attempts,flag): # Check if user has won / out of attempts
+        ui.printStats(attempts,flag)
         break
     
     attempts = attempts-1
+else:
+    print("hi")
