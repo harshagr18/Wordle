@@ -1,5 +1,5 @@
-import HW03_Harsh_Agrawal_ui as ui
-import HW03_Harsh_Agrawal_dictionary as dictionary
+import ui
+import dictionary
 
 
 #Pseudocode

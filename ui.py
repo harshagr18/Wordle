@@ -1,7 +1,7 @@
 if __name__ == "__main__":
     print("Please run the wordle applcation.")
 
-import HW03_Harsh_Agrawal_dictionary as dictionary
+import dictionary
 
 def gameIntro(): # Introduce the game
     print()
