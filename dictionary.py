@@ -1,8 +1,5 @@
 import random
 
-if __name__ == "__main__":
-    print("Please run the wordle applcation.")
-
 def createWordList(): # Create list of 5 letter words, total 1379 words that are 5 letter in the list
     f = open("words.txt", "r")
     data = f.read().split("\n")
@@ -27,3 +24,6 @@ def checkWord(word): # Check if user entered word is valid
         return True
     else:
         return False
+        
+if __name__ == "__main__":
+    print("Please run the wordle applcation.")
