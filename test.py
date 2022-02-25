@@ -40,24 +40,29 @@ class testWordle(unittest.TestCase):
         result = wordle.wordle(solution,tests)
         print(result)
         self.assertTrue(result,"False")
-            
-    def test_wordle7(self): # Case where user wins on first move
-        solution = ['L', 'I', 'K', 'E', 'D']
-        tests = ["LIKED","EMAIL","DEPTH","VEGAS","BONES","HOTEL"]
-        result = wordle.wordle(solution,tests)
-        self.assertTrue(result,"True")
-    
-    def test_wordle8(self): # Case where user wins on last move
-        solution = ['J', 'E', 'S', 'U', 'S']
+
+    def test_wordle7(self): # Case where user tries to open non existant file (exception)
+        solution = ['E', 'M', 'A', 'I', 'L'] 
         tests = ["LIKED","EMAIL","DEPTH","VEGAS","BONES","JESUS"]
         result = wordle.wordle(solution,tests)
-        self.assertTrue(result,"True")
-    
-    def test_wordle9(self):
-        solution = ['E', 'M', 'A', 'I', 'L'] # Case where user wins on seond move
+        try:
+            f = open("myfile.txt","r")
+        except OSError:
+            print()
+            print()
+            print("Could not open","myfile.txt")
+        
+    def test_wordle8(self): # Case where there is an Input error (str + int exception)
+        solution = ['E', 'M', 'A', 'I', 'L'] 
         tests = ["LIKED","EMAIL","DEPTH","VEGAS","BONES","JESUS"]
-        result = wordle.wordle(solution,tests)
-        self.assertTrue(result,"True")
+        try:
+            tests[0] = tests[0] + 1234
+            result = wordle.wordle(solution,tests)
+        except Exception as error:
+            print()
+            print()
+            print(error)
+
 
 
 if __name__ == "__main__":
