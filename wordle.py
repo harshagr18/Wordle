@@ -1,22 +1,6 @@
 import ui
 import dictionary
 
-
-#Pseudocode
-
-"""
-SET solution word
-WHILE number of attempts run out or user wins
-    CHECK if number of attempts remaining are 0
-    WHILE input is not 5 letters, unseen word and alphabetic
-        TAKE user input
-    FOR each letter in the input word
-        CHECK if correct letter is in correct position (primary)
-    FOR each letter in the input word
-        CHECK if correct letter is in incorrect position (secondary)
-    CHECK if each letter is guessed correctly (User wins)
-"""
-
 def wordle(solution,wordList):
     #Game Introduction
     ui.gameIntro()
