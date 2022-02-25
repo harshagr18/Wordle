@@ -1,5 +1,5 @@
 import unittest
-import wordle
+import wordleTest as wordle
 
 # For testing purpose we will hardcode solution and attempts, to remove randomness.
 
