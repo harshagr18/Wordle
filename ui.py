@@ -73,9 +73,30 @@ def gameIntro(): # Introduce the game
 def printAttempts(attempts): # Give current attempt number
     print("This is attempt number ",(7-attempts),":",end="")
 
+
+def userInputAndCheck2(attemptList): # Take user input and check if it is valid
+    while True: # Input from user until the correct type of input is provided (size, alphabetic, not previously used)
+        userInput = list(input().upper())
+
+        if(len(userInput) == 5):
+            if("".join(userInput) not in attemptList):
+                if("".join(userInput).isalpha()):
+                    if(dictionary.checkWord("".join(userInput))):
+                        break
+                    else:
+                        print("Not a valid dictionary word")
+                else:
+                    print("The word contains non alphabetic characters. (Please retry)")
+            else:
+                print("Word has been tried before. (Please retry)")
+        else:
+            print("Word length is not 5. (Please retry)")
+    return userInput
+
+
+
 def userInputAndCheck(attemptList,userInput): # Take user input and check if it is valid
     while True: # Input from user until the correct type of input is provided (size, alphabetic, not previously used)
-
         if(dictionary.checkWord("".join(userInput))):
             if("".join(userInput) not in attemptList):
                 if("".join(userInput).isalpha()):
@@ -99,6 +120,7 @@ def checkWin(attempts,flag=0): # Check if the user won or lost
     if(attempts == 0): 
         print("Sorry, you lose. Better luck next time")
         print()
+
         return True
     elif(flag == 5):
         print("Congratulations! You win.")
