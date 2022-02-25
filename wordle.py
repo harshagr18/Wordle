@@ -1,7 +1,6 @@
 import ui
 import dictionary
-
-
+from datetime import datetime
 #Pseudocode
 
 """
@@ -28,7 +27,17 @@ attemptList = [] # Records number of user's tried words
 
 while True: # Runs the loop until number of attempts run out, or the user wins.
     if ui.checkWin(attempts):
+        f = open("gameplay.log","a")
+        now = datetime.now()
+        temp = "Game played at " + str(now) + "\n"
+        f.write(temp)
+        f.write("Words used were\n")
+        for i in attemptList:
+            temp = i + "\n"
+            f.write(temp)
+        f.write("\n")
         break
+
     flag = 0 # Tracks number of letters rightly guessed in the correct position on each attempt to check if user has one
     result = ["","","","",""] # Assigns "+","-" or "^" depending on correct and incorrect letters and positions
     search = ["0","0","0","0","0"] # Used to check if a letter has been used, so same letter doesn't give 2 positive outputs.
@@ -61,6 +70,15 @@ while True: # Runs the loop until number of attempts run out, or the user wins.
     ui.printRound(userInput,result) # Show result of current input
 
     if ui.checkWin(attempts,flag): # Check if user has won / out of attempts
+        f = open("gameplay.log","a")
+        now = datetime.now()
+        temp = "Game played at " + str(now) + "\n"
+        f.write(temp)
+        f.write("Words used were\n")
+        for i in attemptList:
+            temp = i + "\n"
+            f.write(temp)
+        f.write("\n")
         break
     
     attempts = attempts-1
