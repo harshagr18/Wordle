@@ -12,7 +12,7 @@ def readstats(): # Reads csv file, parses through and converts to dictionary wit
     letterDict = convTuples(letterDict)
     return letterDict
 
-def createRank(data): # Function to rank the words
+def createRank(data,letterDict): # Function to rank the words
     wordDict = {}
     for i in data: # Create likelihood values
         temp = 1
@@ -32,20 +32,16 @@ def createRank(data): # Function to rank the words
     dataFrame = dataFrame[:-1] # Removing the last value which is empty from 5Letter.txt
     dataFrame.to_csv("wordRank.csv") # Saving to csv
 
-
-if __name__ != "__main__": # Module not meant to be imported
-    "Please do not import statistics.py"
-
-else:
+def main():
     f = open("5Letter.txt","r") # work on words with only 5 letters
     data = f.read().split("\n")
 
     letterDict = {"A":[0,0,0,0,0],"B":[0,0,0,0,0],"C":[0,0,0,0,0],"D":[0,0,0,0,0],"E":[0,0,0,0,0],"F":[0,0,0,0,0],"G":[0,0,0,0,0],"H":[0,0,0,0,0],"I":[0,0,0,0,0],"J":[0,0,0,0,0],"K":[0,0,0,0,0],"L":[0,0,0,0,0],"M":[0,0,0,0,0],"N":[0,0,0,0,0],"O":[0,0,0,0,0],"P":[0,0,0,0,0],"Q":[0,0,0,0,0],"R":[0,0,0,0,0],"S":[0,0,0,0,0],"T":[0,0,0,0,0],"U":[0,0,0,0,0],"V":[0,0,0,0,0],"W":[0,0,0,0,0],"X":[0,0,0,0,0],"Y":[0,0,0,0,0],"Z":[0,0,0,0,0]}
- 
+
     for i in data: # Parse through words and add occurences
         for j in range(len(i)):
             letterDict[i[j]][j] = letterDict[i[j]][j] + 1
-    
+
 
     temp = [] # Take values into a list for converting to dataframe
     for i in letterDict.values():
@@ -57,7 +53,11 @@ else:
     dataFrame.to_csv("letterFrequency.csv") # Saving to csv
 
     print(readstats())
-    createRank(data)
+    createRank(data,letterDict)
+    return len(data)
 
     f.close() # Closing the file
 
+
+if __name__ == "__main__":
+    main()
