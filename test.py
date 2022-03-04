@@ -1,5 +1,6 @@
 import unittest
 import wordleTest as wordle
+import statistics as stats
 
 # For testing purpose we will hardcode solution and attempts, to remove randomness.
 
@@ -63,6 +64,9 @@ class testWordle(unittest.TestCase):
             print()
             print(error)
 
+    def test_wordle9(self): # Checking if all words are being used in statistics.py
+        result = stats.main()
+        self.assertTrue(result,1380)
 
 
 if __name__ == "__main__":
