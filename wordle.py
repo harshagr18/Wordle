@@ -1,84 +1,113 @@
-import ui
-import dictionary
-from datetime import datetime
-#Pseudocode
+import random
 
-"""
-SET solution word
-WHILE number of attempts run out or user wins
-    CHECK if number of attempts remaining are 0
-    WHILE input is not 5 letters, unseen word and alphabetic
-        TAKE user input
-    FOR each letter in the input word
-        CHECK if correct letter is in correct position (primary)
-    FOR each letter in the input word
-        CHECK if correct letter is in incorrect position (secondary)
-    CHECK if each letter is guessed correctly (User wins)
-"""
+class Wordle:
 
-#Game Introduction
-ui.gameIntro()
+    solution = []
+    attemptList = []
+    attempts = 6
+    wordList = []
 
-solution = dictionary.randomWord() # Generate a random word
- 
-print("Solution is ",solution,"\n")# Debug Line
-attempts = 6 # Number of attempts allowed
-attemptList = [] # Records number of user's tried words
+    def __init__(self):
+        f = open("5Letter.txt")
+        words = f.read().split("\n")
+        self.wordList = words
+        self.solution = list(words[random.randint(0, 1378)].upper())
 
-while True: # Runs the loop until number of attempts run out, or the user wins.
-    if ui.checkWin(attempts):
-        f = open("gameplay.log","a")
-        now = datetime.now()
-        temp = "Game played at " + str(now) + "\n"
-        f.write(temp)
-        f.write("Words used were\n")
-        for i in attemptList:
-            temp = i + "\n"
-            f.write(temp)
-        f.write("\n")
-        break
-
-    flag = 0 # Tracks number of letters rightly guessed in the correct position on each attempt to check if user has one
-    result = ["","","","",""] # Assigns "+","-" or "^" depending on correct and incorrect letters and positions
-    search = ["0","0","0","0","0"] # Used to check if a letter has been used, so same letter doesn't give 2 positive outputs.
-    pos = 0 # Used to track the letter that is being used in the actual word to create result
-
-
-    ui.printAttempts(attempts) # Current attempt number
+    def __str__ (self):
+        attemptsMade = ",".join(self.attemptList)
+        return 'Solution is ' + "".join(self.solution) + ' number of attempts remaining is ' + str(self.attempts) + ' and words attempted till now are ' + attemptsMade
     
-    userInput = ui.userInputAndCheck2(attemptList) # Check if word is valid
-    attemptList.append("".join(userInput)) # Track used words
-    
-    for i in range(5): # Checking for correct letters in correct positions first, to ensure highest priority
-        if(userInput[i] == solution[i]):
-            flag = flag + 1
-            result[i] = (" ")
-            search[i] = 1
+    def intro(self):
+        print()
+        print("Welcome to wordle")
+        print()
+        print("Correct letters in correct positions will have a ' ' under them, correct letters in incorrect positions will have a '\'' under them and incorrect letters will have '\"' under them.")
+        print("You will have 6 guesses.")
+        print()
 
-    for i in range(5): # Checking for correct letters in incorrect position and lastly incorrect letters
-        if(userInput[i] in solution and result[i] == ""):
-            pos = "".join(solution).find(userInput[i])
-            if(search[pos] == 1):
-                result[i] = ("\"")
+    def loss(self):
+        print()
+        print("Sorry you have run out of attempts. You lose, the word was "+ "".join(self.solution))
+
+    def input(self):
+        while True:
+            temp = input()
+            temp = list(temp.upper())
+            if len(temp) != 5:
+                print()
+                print("Word length is not 5")
+                print()
+                continue
+            elif "".join(temp) in self.attemptList:
+                print()
+                print("Word has already been tried")
+                print()
+                continue               
+            elif not "".join(temp).isalpha():
+                print()
+                print("Word has non alphabetic characters")
+                print()
+                continue
+            elif "".join(temp) not in self.wordList:
+                print()
+                print("Word doesn't exist")
+                print()
+                continue
             else:
-                result[i] = ("'")
-                search[pos] = 1
-        elif result[i] == "":
-            result[i] = ("\"")
+                self.attemptList.append("".join(temp))
+                return temp
 
+    def checkWord(self,currentAttempt):
 
-    ui.printRound(userInput,result) # Show result of current input
+        flag = 0 # Tracks number of letters rightly guessed in the correct position on each attempt to check if user has one
+        result = ["","","","",""] # Assigns " ",""" or "'" depending on correct and incorrect letters and positions
+        search = ["0","0","0","0","0"] # Used to check if a letter has been used, so same letter doesn't give 2 positive outputs.
+        pos = 0 # Used to track the letter that is being used in the actual word to create result
 
-    if ui.checkWin(attempts,flag): # Check if user has won / out of attempts
-        f = open("gameplay.log","a")
-        now = datetime.now()
-        temp = "Game played at " + str(now) + "\n"
-        f.write(temp)
-        f.write("Words used were\n")
-        for i in attemptList:
-            temp = i + "\n"
-            f.write(temp)
-        f.write("\n")
-        break
+        for i in range(5): # Checking for correct letters in correct positions first, to ensure highest priority
+            if(currentAttempt[i] == self.solution[i]):
+                flag = flag + 1
+                result[i] = (" ")
+                search[i] = 1
+
+        for i in range(5): # Checking for correct letters in incorrect position and lastly incorrect letters
+            if(currentAttempt[i] in self.solution and result[i] == ""):
+                pos = "".join(self.solution).find(currentAttempt[i])
+                if(search[pos] == 1):
+                    result[i] = ("\"")
+                else:
+                    result[i] = ("'")
+                    search[pos] = 1
+            elif result[i] == "":
+                result[i] = ("\"")
+        
+        return (result,flag)
     
-    attempts = attempts-1
+    def win(self):
+        print()
+        print("Congratulations you have guessed the right word!")
+        print()
+
+
+
+w = Wordle()
+w.intro()
+print(w.__str__())
+while w.attempts > 0:
+    print()
+    print("Please make your "+ str(7 - w.attempts) + " guess")
+    currentAttempt = w.input()
+    result,flag = w.checkWord(currentAttempt)
+
+    if flag == 5:
+        w.win()
+        break
+
+    for i in range(5):
+        print(result[i], end = "")
+    print()
+
+    w.attempts -= 1
+else:
+    w.loss()
+
