@@ -5,4 +5,4 @@ Correct letters in correct positions will have a ' ' under them, correct letters
 You will have 6 Guesses, after which the game will end.
 
 ## RUN "python wordle.py" to play the game using class implementation
-## Run "python test.py" to run QA testing on the wordle game
+## Run "python test.py" to run 6 new QA tests on the wordle game
