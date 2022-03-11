@@ -3,7 +3,7 @@ import random
 class Wordle:
 
     solution = []
-    attemptList = []
+    attemptList = ["None"]
     attempts = 6
     wordList = []
 
