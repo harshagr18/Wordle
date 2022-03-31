@@ -89,25 +89,30 @@ class Wordle:
         print()
 
 
+if __name__ == "__main__":
+    w = Wordle()
+    w.intro()
+    print(w.__str__())
+    while w.attempts > 0:
+        print()
+        print("Please make your "+ str(7 - w.attempts) + " guess")
+        currentAttempt = w.input()
+        result,flag = w.checkWord(currentAttempt)
 
-w = Wordle()
-w.intro()
-print(w.__str__())
-while w.attempts > 0:
-    print()
-    print("Please make your "+ str(7 - w.attempts) + " guess")
-    currentAttempt = w.input()
-    result,flag = w.checkWord(currentAttempt)
+        if flag == 5:
+            w.win()
+            break
 
-    if flag == 5:
-        w.win()
-        break
+        for i in range(5):
+            print(result[i], end = "")
+        print()
 
-    for i in range(5):
-        print(result[i], end = "")
-    print()
+        w.attempts -= 1
+    else:
+        w.loss()
 
-    w.attempts -= 1
-else:
-    w.loss()
-
+def play(solution,guess):
+    w = Wordle()
+    w.solution = solution
+    currentAttempt = list(guess)
+    return w.checkWord(currentAttempt)

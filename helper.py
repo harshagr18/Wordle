@@ -153,3 +153,47 @@ if __name__ == "__main__":
 
     print("Top possible solutions to this wordle, are given below in order of likelihood.")
     result.print50()
+
+
+def printTop(prev="",good=[],bad=[],first="",second="",third="",fourth="",fifth=""):
+    good = list(set(list(good)))
+
+    bad = list(set(list(bad)))
+
+    first = first.upper()
+    second = second.upper()
+    third = third.upper()
+    fourth = fourth.upper()
+    fifth = fifth.upper()
+
+
+    wordRank = pd.read_csv("wordRank.csv")
+    wordList = list(wordRank["Word"])
+    for i in wordList:
+        word = list(i)
+        flag = 1
+        if len(good) > 0:
+            for j in good:
+                if j not in word:
+                    flag = 0
+        if len(bad) > 0:
+            for j in bad:
+                if j in word:
+                    flag = 0
+        if len(first) > 0:
+            if word[0] != first:
+                flag = 0
+        if len(second) > 0:
+            if word[1] != second:
+                flag = 0
+        if len(third) > 0:
+            if word[2] != third:
+                flag = 0
+        if len(fourth) > 0:
+            if word[3] != fourth:
+                flag = 0
+        if len(fifth) > 0:
+            if word[4] != fifth:
+                flag = 0
+        if flag == 1 and "".join(word) not in prev:
+            return("".join(word))
