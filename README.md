@@ -12,3 +12,5 @@
 - Run "python helper.py" to manually use a helper module for the wordle game
 - Run "python test.py" to run QA tests on the wordle game (dependency - wordleTest.py)
 - Run "python solver.py" to run a simulation of a module playing the wordle game using the helper module
+- Delete database.db and record.db and run "python play1000.py" to run 1000 simulations of the game automatically saved to db
+- Run "python dbAnalyze.py" to analyze any given day's record
