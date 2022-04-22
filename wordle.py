@@ -1,23 +1,23 @@
 import random
 
-class Wordle:
+class Wordle: # When playing wordle manually
 
     solution = []
     attemptList = ["None"]
     attempts = 6
     wordList = []
 
-    def __init__(self):
+    def __init__(self): # Intialize the wordle game with a random word
         f = open("5Letter.txt")
         words = f.read().split("\n")
         self.wordList = words
         self.solution = list(words[random.randint(0, 1378)].upper())
 
-    def __str__ (self):
+    def __str__ (self): # Print current state of wordle game
         attemptsMade = ",".join(self.attemptList)
         return 'Solution is ' + "".join(self.solution) + ' number of attempts remaining is ' + str(self.attempts) + ' and words attempted till now are ' + attemptsMade
     
-    def intro(self):
+    def intro(self): # Quick introduction of the game
         print()
         print("Welcome to wordle")
         print()
@@ -25,11 +25,11 @@ class Wordle:
         print("You will have 6 guesses.")
         print()
 
-    def loss(self):
+    def loss(self): # Runs of the player loses
         print()
         print("Sorry you have run out of attempts. You lose, the word was "+ "".join(self.solution))
 
-    def input(self):
+    def input(self): # Check inputs and add to attemptlist
         while True:
             temp = input()
             temp = list(temp.upper())
@@ -57,7 +57,7 @@ class Wordle:
                 self.attemptList.append("".join(temp))
                 return temp
 
-    def checkWord(self,currentAttempt):
+    def checkWord(self,currentAttempt): # Generate result for user input
 
         flag = 0 # Tracks number of letters rightly guessed in the correct position on each attempt to check if user has one
         result = ["","","","",""] # Assigns " ",""" or "'" depending on correct and incorrect letters and positions
@@ -83,13 +83,13 @@ class Wordle:
         
         return (result,flag)
     
-    def win(self):
+    def win(self): # Runs if user wins
         print()
         print("Congratulations you have guessed the right word!")
         print()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # Play game by user
     w = Wordle()
     w.intro()
     print(w.__str__())
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     else:
         w.loss()
 
-def play(solution,guess):
+def play(solution,guess): # Used by solver
     w = Wordle()
     w.solution = solution
     currentAttempt = list(guess)

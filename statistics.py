@@ -1,4 +1,3 @@
-from venv import create
 import pandas as pd # Pandas to deal with CSV files
 
 def convTuples(letterDict): # Function to convert dictionary with list to dictionary with tuples
@@ -52,11 +51,9 @@ def main():
     dataFrame = dataFrame.round(4) # Rounding off to 4 decimal places
     dataFrame.to_csv("letterFrequency.csv") # Saving to csv
 
-    print(readstats())
     createRank(data,letterDict)
-    return len(data)
-
     f.close() # Closing the file
+    return len(data)
 
 
 if __name__ == "__main__":
